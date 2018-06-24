@@ -1,4 +1,5 @@
 import React from "react";
+import "./FormBtn.css"
 
 export const FormBtn = props => {
   let classes = 'btn ';
@@ -33,8 +34,8 @@ export const FormBtn = props => {
   classes += ' ' + props.additional
   //use prop addClass to add any additional classes
   return (
-    <button {...props} className={`float-right ${classes}`}>
-      {props.children} 
+    <button {...props} className={`button1 text-right ${classes}`}>
+      {props.children}
     </button>
   )
 }
