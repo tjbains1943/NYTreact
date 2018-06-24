@@ -33,8 +33,8 @@ export const FormBtn = props => {
   classes += ' ' + props.additional
   //use prop addClass to add any additional classes
   return (
-    <button {...props} className={classes}>
-      {props.children}
+    <button {...props} className={`float-right ${classes}`}>
+      {props.children} 
     </button>
   )
 }
