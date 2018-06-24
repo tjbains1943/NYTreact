@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
 import { Article } from '../../components/Article'
-import Jumbotron from "../../components/Jumbotron";
-import { Container, Row, Col } from "../../components/Grid";
 import { Panel, PanelHeading, PanelBody } from '../../components/Panel'
 
 
@@ -45,13 +43,10 @@ export default class SavedArticles extends Component {
 
   render() {
     return (
-      <Container fluid>
-        <Row>
-          <Col size="sm-10" offset='sm-1'>
-          <div className="bg-light">
+          <div className="bg-light boxShadow">
             <Panel>
               <PanelHeading>
-                <h3>Saved Articles</h3>
+                <h3 className="text-center">Saved Articles</h3>
               </PanelHeading>
               <PanelBody>
                 { this.state.savedArticles.length > 0 ?
@@ -66,14 +61,12 @@ export default class SavedArticles extends Component {
                       onClick={() => this.deleteArticle(article._id)}
                     />
                     )
-                  )) : <h1>You have no saved articles.</h1>
+                  )) : <h1 className="text-center">Click on the save button to have articles saved here.</h1>
                 }
               </PanelBody>
             </Panel>
             </div>
-          </Col>
-        </Row>
-      </Container>
+      
     );
   };
 };

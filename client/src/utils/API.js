@@ -13,7 +13,9 @@ export default {
   saveArticle: function(articleData) {
     return axios.post("/api/articles", articleData);
   },
-  queryNYT: function (queryUrl) {
-    return axios.get(queryUrl);
+  queryNYT: function (query, page) {
+    let queryUrl = `https://api.nytimes.com/svc/search/v2/articlesearch.json?sort=newest&page=${page}`
+    let key = `&api-key=b9f91d369ff59547cd47b931d8cbc56b:0:74623931`;
+    return axios.get(`${queryUrl}${key}${query}`);
   }
 };

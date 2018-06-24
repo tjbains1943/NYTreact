@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import { Article } from '../../components/Article'
 import Jumbotron from "../../components/Jumbotron";
-import { Container, Row, Col } from "../../components/Grid";
 import { Panel, PanelHeading, PanelBody } from '../../components/Panel';
 import { Form, Input, FormBtn, FormGroup, Label } from "../../components/Form";
 import Saved from '../Saved/';
@@ -64,9 +63,8 @@ export default class Articles extends Component {
       this.setState({results: []})
     }
     let { topic, sYear, eYear } = query
-
-    let queryUrl = `https://api.nytimes.com/svc/search/v2/articlesearch.json?sort=newest&page=${this.state.page}`
-    let key = `&api-key=33c676fd7fd14e90a532f9698ab4dd4a`
+    let queryUrl = "";
+   
 
     //removing spaces and building the query url conditionally
     //based on presence of optional search terms
@@ -82,11 +80,10 @@ export default class Articles extends Component {
     if(eYear){
       queryUrl+= `&end_date=${eYear}`
     }
-    queryUrl+=key;
 
     //calling the API
     API
-      .queryNYT(queryUrl)
+      .queryNYT(queryUrl, this.state.page)
       .then(results => {
           //concatenating new results to the current state of results.  If empty will just show results,
           //but if search was done to get more, it shows all results.  Also stores current search terms
@@ -104,29 +101,18 @@ export default class Articles extends Component {
       .catch(err=> console.log(err))
   }
 
-  //function that is called when user clicks the get more results button
-  getMoreResults = () => {
-    let { topic, eYear, sYear} = this.state.previousSearch;
-    let query = { topic, eYear, sYear }
-    //increments page number for search and then runs query
-    let page = this.state.page;
-    page++
-    this.setState({page: page}, function (){
-      this.getArticles(query)
-    });
-  }
 
   render() {
     return (
       <div className="container">
        
             <Jumbotron>
-              <h1 className='page-header text-center'>New York Times Article Searcher</h1>
-              <h4 className='text-center'>Search for and save articles of interest</h4>
+              <h1 className='page-header text-center'>New York Times Article Scrubber</h1>
+              <h4 className='text-center'>Search for and save articles of interest.</h4>
             </Jumbotron>
             <Panel className="bg-light">
               <PanelHeading>
-                <h3>Search</h3>
+                <h3 className="pl-5 pt-3">Search</h3>
               </PanelHeading>
               <PanelBody>
                 <Form style={{marginBottom: '30px'}}>
@@ -137,17 +123,15 @@ export default class Articles extends Component {
                       name='topic'
                       value={this.state.topic}
                       placeholder='Topic'
-                      onfocus={this.placeholder = 's'}
                     />
                   </FormGroup>
                   <FormGroup >
-                    <Label htmlFor="sYear">Enter a beginning date to search htmlFor (optional):</Label>
+                    <Label htmlFor="sYear">Enter a beginning date to search For (optional):</Label>
                     <Input
                       onChange={this.handleInputChange}
                       type='date'
                       name='sYear'
                       value={this.state.sYear}
-                      placeholder='Start Year'
                     />
                   </FormGroup>
                   <FormGroup >
@@ -157,7 +141,6 @@ export default class Articles extends Component {
                       type='date'
                       name='eYear'
                       value={this.state.eYear}
-                      placeholder='End Year'
                     />
                   </FormGroup>
                   <FormBtn
@@ -171,10 +154,10 @@ export default class Articles extends Component {
             </Panel>
             { this.state.noResults ?
               "<h1>No results Found.  Please try again</h1>" :
-              this.state.results.length>0 ? (
+              this.state.results.length > 0 ? (
                 <Panel>
-                  <PanelHeading>
-                    <h3>Results</h3>
+                  <PanelHeading className="bg-light p-1">
+                    <h3 className="text-center">Results</h3>
                   </PanelHeading>
                   <PanelBody>
                     {
@@ -191,7 +174,6 @@ export default class Articles extends Component {
                         )
                       )
                     }
-                      <FormBtn type='warning' additional='btn-block' onClick={this.getMoreResults}>Get more results</FormBtn>
                   </PanelBody>
                 </Panel>
               ) : ''
