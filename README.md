@@ -11,7 +11,7 @@
 * Heroku
 * mLab MongoDB
 * Bootstrap
-* Yarn, NPM packages - Axios, Body-parser, Express, Moment, Mongoose, Morgan, React, React-dom, React-router-dom, react-scripts 
+* Yarn, NPM packages - Axios, body-parser, Express, Moment, Mongoose, Morgan, React, React-dom, React-router-dom, react-scripts, path
 
 ## About
 To view the app follow this link https://nytreact1943.herokuapp.com/
